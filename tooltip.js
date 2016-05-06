@@ -3,7 +3,7 @@
  * @author Alex O. <organ.f.a@gmail.com>
  */
  
- /* global $ */
+/* global $ */
 
 // (function($, Tooltips){
 
@@ -30,16 +30,31 @@
 
     /**
      * Pring rebug message if debugging enabled
+     * @param {String} message
      */
     function debug(message){
         if (DEBUG) console.log(message);
     }
     
+    /**
+     * Bounding box class
+     * @param {HTMLElement} element
+     * @return {object} Element dimensions
+     * @constructor
+     */
     function BBox(element){
         var self = this
         ,   W = element.offsetParent.offsetWidth
         ,   H = element.offsetParent.offsetHeight
         ;
+        /**
+         * Element dimensions object
+         * @attr {int} top Available space to the top
+         * @attr {int} bottom Available space to the bottom
+         * @attr {int} right Available space to the right
+         * @attr {int} left Available space to the left
+         * @attr {object} center Coordinates of cenver of tooltipped element
+         */
         var D = {
             get top(){
                 return element.offsetTop;

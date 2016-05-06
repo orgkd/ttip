@@ -1,3 +1,67 @@
+@keyframes ttip-show-top {
+  from {
+    transform: translateY(-22px);
+  }
+  to {
+    transform: translateY(0), translateX(0);
+  }
+}
+@-webkit-keyframes ttip-show-top {
+  from {
+    transform: translateY(-22px);
+  }
+  to {
+    transform: translateY(0), translateX(0);
+  }
+}
+@keyframes ttip-show-bottom {
+  from {
+    transform: translateY(22px);
+  }
+  to {
+    transform: translateY(0), translateX(0);
+  }
+}
+@-webkit-keyframes ttip-show-bottom {
+  from {
+    transform: translateY(22px);
+  }
+  to {
+    transform: translateY(0), translateX(0);
+  }
+}
+@keyframes ttip-show-left {
+  from {
+    transform: translateX(-22px);
+  }
+  to {
+    transform: translateY(0), translateX(0);
+  }
+}
+@-webkit-keyframes ttip-show-left {
+  from {
+    transform: translateX(-22px);
+  }
+  to {
+    transform: translateY(0), translateX(0);
+  }
+}
+@keyframes ttip-show-right {
+  from {
+    transform: translateX(22px);
+  }
+  to {
+    transform: translateY(0), translateX(0);
+  }
+}
+@-webkit-keyframes ttip-show-right {
+  from {
+    transform: translateX(22px);
+  }
+  to {
+    transform: translateY(0), translateX(0);
+  }
+}
 [data-tooltip],
 [data-popover] {
   background-color: yellow;
@@ -28,18 +92,21 @@
   z-index: 500ms step-end 200ms;
 }
 [data-popover]:not(.toggle) .ttip-container {
-  transition: all 0s, opacity 200ms ease 500ms, transform 200ms ease 500ms, visibility 200ms step-end 500ms;
   transition: all 0s, opacity 200ms ease 500ms, transform 200ms ease 500ms, visibility 0s ease 500ms;
 }
-[data-popover]:not(.toggle) .ttip-container:hover {
-  transition: all 0s, opacity 200ms ease 500ms, transform 200ms ease 500ms, visibility 200ms step-start 500ms;
+[data-popover]:not(.toggle):hover {
+  z-index: 10;
+}
+[data-popover]:not(.toggle):hover .ttip-container {
+  display: inline-block;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) translateX(0);
   transition: all 0s, opacity 200ms ease 500ms, transform 200ms ease 500ms, visibility 0s ease 500ms;
 }
-[data-popover]:hover,
 [data-popover].open {
   z-index: 10;
 }
-[data-popover]:hover .ttip-container,
 [data-popover].open .ttip-container {
   display: inline-block;
   visibility: visible;
@@ -80,6 +147,7 @@
   border-width: 10px;
 }
 .ttip-container.top {
+  animation: ttip-show-top 200ms;
   transform: translateY(-22px);
 }
 .ttip-container.top .after,
@@ -96,6 +164,7 @@
   bottom: -20px;
 }
 .ttip-container.bottom {
+  animation: ttip-show-bottom 200ms;
   transform: translateY(22px);
 }
 .ttip-container.bottom .after,
@@ -112,6 +181,7 @@
   top: -20px;
 }
 .ttip-container.left {
+  animation: ttip-show-left 200ms;
   transform: translateX(-22px);
 }
 .ttip-container.left .after,
@@ -128,6 +198,7 @@
   right: -20px;
 }
 .ttip-container.right {
+  animation: ttip-show-right 200ms;
   transform: translateX(22px);
 }
 .ttip-container.right .after,

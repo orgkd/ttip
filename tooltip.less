@@ -1,8 +1,28 @@
-// @keyframes mymove {
-//     from {top: 0px;}
-//     to {top: 200px;}
-// }
+@transl: 22px;
 
+.ttip-show-animation(@name, @transform){
+  @keyframes @name {
+    from {
+      transform: @transform;
+    }
+    to {
+      transform: translateY(0), translateX(0);
+    }
+  }
+  @-webkit-keyframes @name {
+    from {
+      transform: @transform;
+    }
+    to {
+      transform: translateY(0), translateX(0);
+    }
+  }
+}
+
+.ttip-show-animation(ttip-show-top, translateY(-1*@transl));
+.ttip-show-animation(ttip-show-bottom, translateY(@transl));
+.ttip-show-animation(ttip-show-left, translateX(-1*@transl));
+.ttip-show-animation(ttip-show-right, translateX(@transl));
 
 [data-tooltip], [data-popover]{
   background-color: yellow;
@@ -10,13 +30,10 @@
   z-index: 0;
   transition: z-index 200ms step-end;
   
-  .ttip-container{
-    // display: none;
-  }
-
   &:hover{
     z-index: 10;
     transition: z-index 200ms step-start;
+    
     .ttip-container{
       opacity: 1;
       transform: translateY(0) translateX(0);
@@ -44,18 +61,27 @@
     @d: 500ms;
     @t: 200ms;
     z-index: @d step-end @t;
+    
     .ttip-container{
-        transition: all 0s, opacity @t ease @d, transform @t ease @d, visibility @t step-end @d;
-        transition: all 0s, opacity @t ease @d, transform @t ease @d, visibility 0s ease @d;
+      transition: all 0s, opacity @t ease @d, transform @t ease @d, visibility 0s ease @d;
+    }
+    
     &:hover{
-        transition: all 0s, opacity @t ease @d, transform @t ease @d, visibility @t step-start @d;
+      z-index: 10;
+      
+      .ttip-container{
+        display: inline-block;
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0) translateX(0);
         transition: all 0s, opacity @t ease @d, transform @t ease @d, visibility 0s ease @d;
       }
     }
   }
   
-  &:hover, &.open{
+  &.open{
     z-index: 10;
+    
     .ttip-container{
       display: inline-block;
       visibility: visible;
@@ -63,23 +89,6 @@
       transform: translateY(0) translateX(0);
     }
   }
-
-
-// [data-popover]{
-//   @d: 1300ms;
-//   @t: 200ms;
-//   z-index @d step-end @t;
-  
-//   .ttip-container{
-//     transition: all 0s, opacity @t ease @d, transform @t ease @d;
-//   }
-  
-//   &:hover{
-//     .ttip-container{
-//       transition: all 0s, opacity @t ease @d, transform @t ease @d, visibility 0s ease 10s;
-//     }
-//   }
-// } }
 }
 
 [data-popover-content]{
@@ -99,7 +108,6 @@
   left: 0;
   opacity: 0;
   transition: all 0s ease, opacity 200ms, transform 200ms;
-  @transl: 22px;
   
   @pointer: 10px;
   @bgc: white;
@@ -123,6 +131,7 @@
   }
 
   &.top{
+    animation: ttip-show-top 200ms;
     transform: translateY(-1*@transl);
     & .after, & .before{
       left: 50%;
@@ -139,6 +148,7 @@
   }
   
   &.bottom{
+    animation: ttip-show-bottom 200ms;
     transform: translateY(@transl);
     & .after, & .before{
       left: 50%;
@@ -155,6 +165,7 @@
   }
   
   &.left{
+    animation: ttip-show-left 200ms;
     transform: translateX(-1*@transl);
     & .after, & .before{
       top: 50%;
@@ -171,6 +182,7 @@
   }
   
   &.right{
+    animation: ttip-show-right 200ms;
     transform: translateX(@transl);
     & .after, & .before{
       top: 50%;
