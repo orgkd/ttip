@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ttip.js - Tooltips and popovers</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
+    <style type="text/css">
+        html, body{
+            font-family: Roboto, sanf-serif;
+        }
+        h1, h2, h3{
+            font-weight: lighter;
+        }
+        .main, .header{
+            width: 50%;
+            min-width: 500px;
+            margin: 0 auto;
+        }
+        ul.menu {
+            list-style: none;
+            padding: 10px 0;
+        }
+        ul.menu li{
+            padding: 0;
+            display: inline-block;
+            margin: 0 5px;
+            color: #d8d8d8;
+        }
+        ul.menu li:not(:first-child):before{
+            content: "|";
+            margin-right: 10px;
+        }
+        ul.menu li:first-child{
+            margin-left: 0;
+        }
+        ul.menu a{
+            text-decoration: none;
+            color: inherit;
+        }
+        ul.menu a:hover{
+            color: #cccccc;
+        }
+        pre{
+            background-color: whitesmoke;
+            padding: 0 15px;
+        }
+        code{
+            background-color: whitesmoke;
+        }
+        [data-tooltip]{
+            border-bottom: 1px dotted;
+        }
+        img{
+            width: 100%;
+        }
+    </style>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+    <script type="text/javascript" src="../tooltip.js"></script>
+    <link rel="stylesheet" href="../tooltip.css">
+</head>
+<body>
+
+    <div class="header">
+        <ul class="menu">
+            <li><a href="">Usage</a></li>
+            <li><a href="#examples">Examples</a></li>
+            <li><a href="#usage">Github</a></li>
+        </ul>
+    </div>
+
+    <div class="main">
+        <h1><b>ttip</b>.js</h1>
+
+        <h2>Tooltips and popovers</h2>
+
+        <h3><a name="usage">Usage</a></h3>
+
+        Include style and js file:
+
+        <pre><code>
+...
+&lt;script type="text/javascript" src="../tooltip.js"&gt;&lt;/script&gt;
+&lt;link rel="stylesheet" href="../tooltip.css" type="text/css"&gt;
+...
+        </code></pre>
+
+        <p>Note: javascript file should be included after jQuery</p>
+
+        <p>
+            Add <code>data-tooltip</code> attribute to element on which tooltip should be shown.
+            Tooltip will appear when pointer is over element. Hover
+            <span data-tooltip="Oh, look! This is a tooltip!" data-ttip-position="top">HERE</span>
+            to see example.
+        </p>
+
+        <pre><code>
+&lt;span data-tooltip="Oh, look! This is a tooltip!"
+      data-ttip-position="top"&gt;
+      ...
+&lt;/span&gt;
+        </code></pre>
+
+        <p>
+            <code>data-ttip-position</code> attribute can be omitted, then tooltip will be placed
+            automatically based on position of tooltipped element on the page. Also position can de defined
+            explicitly. Possible values: <code>top</code>, <code>bottom</code>, <code>right</code>,
+            <code>left</code>.
+        </p>
+
+        <p>
+            Tooltip position will be calculated dynamically, so it will fit into viewport event on the sides
+            of the page
+        </p>
+
+        <img src="img/example-1.png" alt="Example image">
+
+        <h3><a name="examples">Examples</a></h3>
+
+    </div>
+
+</body>
+</html>
