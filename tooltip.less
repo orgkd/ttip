@@ -6,7 +6,7 @@
       transform: @transform;
     }
     to {
-      transform: translateY(0), translateX(0);
+      transform: translateY(0) translateX(0);
     }
   }
   @-webkit-keyframes @name {
@@ -14,7 +14,7 @@
       transform: @transform;
     }
     to {
-      transform: translateY(0), translateX(0);
+      transform: translateY(0) translateX(0);
     }
   }
 }
@@ -25,15 +25,25 @@
 .ttip-show-animation(ttip-show-right, translateX(@transl));
 
 [data-tooltip], [data-popover]{
+  @t: 200ms;
   background-color: yellow;
   position: relative;
   z-index: 0;
-  transition: z-index 200ms step-end;
+  transition: z-index @t step-end;
   
   &:hover{
     z-index: 10;
-    transition: z-index 200ms step-start;
-    
+    transition: z-index @t step-start;
+  }
+}
+
+[data-tooltip]{
+
+  .ttip-container{
+    pointer-events: none;
+  }
+
+  &:hover{
     .ttip-container{
       opacity: 1;
       transform: translateY(0) translateX(0);
@@ -41,36 +51,26 @@
   }
 }
 
-[data-tooltip]{
-  .ttip-container{
-    pointer-events: none;
-  }
-}
-
 [data-popover]{
-  
+  @d: 500ms;
+  @t: 200ms;
+
   .ttip-container{
     visibility: hidden;
+    display: inline-block;
   }
-  
-  &.toggle{
-    cursor: pointer;
-  }
-  
+
   &:not(.toggle){
-    @d: 500ms;
-    @t: 200ms;
     z-index: @d step-end @t;
-    
+
     .ttip-container{
-      transition: all 0s, opacity @t ease @d, transform @t ease @d, visibility 0s ease @d;
+      transition: all 0s, opacity @t ease @d, transform @t ease @d, visibility 0s ease @d + @t;
     }
     
     &:hover{
       z-index: 10;
       
       .ttip-container{
-        display: inline-block;
         opacity: 1;
         visibility: visible;
         transform: translateY(0) translateX(0);
@@ -78,17 +78,33 @@
       }
     }
   }
-  
-  &.open{
-    z-index: 10;
-    
+
+  // Togglable tooltip
+
+  &.toggle{
+    .no_selection;
+    cursor: pointer;
+
     .ttip-container{
-      display: inline-block;
       visibility: visible;
-      opacity: 1;
-      transform: translateY(0) translateX(0);
+    }
+
+    &.open{
+      z-index: 10;
+
+      .ttip-container{
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0) translateX(0);
+        transition: @t;
+      }
+    }
+
+    .before, .after{
+      pointer-events: none;
     }
   }
+
 }
 
 [data-popover-content]{
@@ -198,5 +214,12 @@
     }
   }
   
+}
+
+.no_selection {
+  -webkit-user-select: none; /* webkit (safari, chrome) browsers */
+  -moz-user-select: none; /* mozilla browsers */
+  -khtml-user-select: none; /* webkit (konqueror) browsers */
+  -ms-user-select: none; /* IE10+ */
 }
 
