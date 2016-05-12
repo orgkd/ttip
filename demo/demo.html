@@ -46,11 +46,24 @@
         code{
             background-color: whitesmoke;
         }
-        [data-tooltip]{
+        [data-tooltip],[data-popover]{
             border-bottom: 1px dotted;
         }
         img{
             width: 100%;
+        }
+        .example-canvas{
+            height: 150px;
+            text-align: center;
+            position: relative;
+        }
+        .span-ex{
+            /*outline: 1px dashed black;*/
+            position: absolute !important;
+            /*border-bottom: none !important;*/
+            bottom: 20px;
+            left: 50%;
+            margin-left: -44px;
         }
     </style>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
@@ -61,9 +74,9 @@
 
     <div class="header">
         <ul class="menu">
-            <li><a href="">Usage</a></li>
-            <li><a href="#examples">Examples</a></li>
-            <li><a href="#usage">Github</a></li>
+            <li><a href="#tooltips">Tooltips</a></li>
+            <li><a href="#popovers">Popovers</a></li>
+            <li><a href="">Github</a></li>
         </ul>
     </div>
 
@@ -71,6 +84,14 @@
         <h1><b>ttip</b>.js</h1>
 
         <h2>Tooltips and popovers</h2>
+        
+        <div class="example-canvas">
+            <span class="span-ex toggle" data-popover="pop-ex" data-ttip-position="top">Click me</span>
+        </div>
+        
+        <div data-popover-content="pop-ex">
+            <h3>This is popover element</h3>
+        </div>
 
         <h3><a name="usage">Usage</a></h3>
 
@@ -84,6 +105,10 @@
         </code></pre>
 
         <p>Note: javascript file should be included after jQuery</p>
+        
+        <h4><a name='tooltips'>Tooltips</a></h4>
+        
+        <p>Tooltips are activated when mouse pointer is placed over target element.</p>
 
         <p>
             Add <code>data-tooltip</code> attribute to element on which tooltip should be shown.
@@ -110,10 +135,47 @@
             Tooltip position will be calculated dynamically, so it will fit into viewport event on the sides
             of the page
         </p>
-
-        <img src="img/example-1.png" alt="Example image">
-
-        <h3><a name="examples">Examples</a></h3>
+        
+        <h4><a name='popovers'></a>Popovers</a></h4>
+        
+        <p>
+            Popovers can be shown/hidden by clicking on target element or by placing mouse pointer over target element. 
+            Inside popover you can place content of template element. Template element name could be passed with 
+            <code>data-popover</code> attribute.
+        </p>
+        
+        <div data-popover-content="pop1">
+            <div>Hello, this is <b>new</b> popover</div>
+            <button>OK</button>
+        </div>
+        
+        <p>Hover <span data-popover="pop1" data-ttip-position="top">HERE</span> to see and example.</p>
+        
+        <p>Example code:</p>
+        
+        <pre><code>
+&lt;!-- Popover template --&gt;
+&lt;div data-popover-content="pop1"&gt;
+    &lt;div&gt;Hello, this is &lt;b&gt;new&lt;/b&gt; popover&lt;/div&gt;
+    &lt;button&gt;OK&lt;/button&gt;
+&lt;/div&gt;
+...
+&lt;!-- Target element --&gt;
+&lt;span data-popover="pop1" data-ttip-position="top"&gt;...&lt;/span&gt;
+        </code></pre>
+        
+        <p>To show/hide popover by clicking on element add class <code>toggle</code> to target element.</p>
+        
+        <p>Click <span data-popover="pop1" class="toggle">HERE</span> to see an example.</p>
+        
+        <p>Example code:</p>
+        
+        <pre><code>
+&lt;!-- Target element --&gt;
+&lt;span data-popover="pop1" class="toggle"&gt;...&lt;/span&gt;
+        </code></pre>
+        
+        <div style='height: 50px'></div>
 
     </div>
 

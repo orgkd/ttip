@@ -3,7 +3,7 @@
  * @author Alex O. <organ.f.a@gmail.com>
  */
 
-/* global $ */
+/* global jQuery */
 
 (function ($, ttip) {
 
@@ -43,9 +43,10 @@
      * @constructor
      */
     function BBox(element) {
-        var self = this
-            , W = element.offsetParent.offsetWidth
-            , H = element.offsetParent.offsetHeight
+        // todo : by changing body to offset parent we can use any element as container
+        var body = document.getElementsByTagName('body')[0]
+            , W = body.offsetWidth
+            , H = body.offsetHeight
             ;
 
         /**
@@ -357,7 +358,7 @@
                 , $target = $(target)
                 ;
             if (!$target.has('.ttip-container').length && $target.is('[data-popover]')) {
-                new Popover($target);
+                tt = new Popover($target);
             }
         });
 

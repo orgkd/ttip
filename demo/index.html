@@ -1,97 +1,183 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Tooltips</title>
+    <title>ttip.js - Tooltips and popovers</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
     <style type="text/css">
-        html,body{
-            height: 100%;
-            overflow: hidden;
+        html, body{
+            font-family: Roboto, sanf-serif;
         }
-        body{
-            box-sizing: border-box;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
+        h1, h2, h3{
+            font-weight: lighter;
         }
-        .main{
-            flex: 0;
+        .main, .header{
+            width: 50%;
+            min-width: 500px;
+            margin: 0 auto;
         }
-        .stretch{
-            flex: 1;
+        ul.menu {
+            list-style: none;
+            padding: 10px 0;
         }
-        .footer{
+        ul.menu li{
+            padding: 0;
+            display: inline-block;
+            margin: 0 5px;
+            color: #d8d8d8;
+        }
+        ul.menu li:not(:first-child):before{
+            content: "|";
+            margin-right: 10px;
+        }
+        ul.menu li:first-child{
+            margin-left: 0;
+        }
+        ul.menu a{
+            text-decoration: none;
+            color: inherit;
+        }
+        ul.menu a:hover{
+            color: #cccccc;
+        }
+        pre{
+            background-color: whitesmoke;
+            padding: 0 15px;
+        }
+        code{
+            background-color: whitesmoke;
+        }
+        [data-tooltip],[data-popover]{
+            border-bottom: 1px dotted;
+        }
+        img{
+            width: 100%;
+        }
+        .example-canvas{
+            height: 150px;
             text-align: center;
-            flex: 0;
+            position: relative;
+        }
+        .span-ex{
+            /*outline: 1px dashed black;*/
+            position: absolute !important;
+            /*border-bottom: none !important;*/
+            bottom: 20px;
+            left: 50%;
+            margin-left: -44px;
         }
     </style>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
     <script type="text/javascript" src="../tooltip.js"></script>
-    <link rel="stylesheet" href="../tooltip.css" type="text/css">
+    <link rel="stylesheet" href="../tooltip.css">
 </head>
 <body>
+
+    <div class="header">
+        <ul class="menu">
+            <li><a href="#tooltips">Tooltips</a></li>
+            <li><a href="#popovers">Popovers</a></li>
+            <li><a href="">Github</a></li>
+        </ul>
+    </div>
+
     <div class="main">
-        <p>Lorem ipsum dolor sit 
-        <span data-tooltip="Modo typi, qui nunc nobis videntur parum clari, fiant 
-        asdfas asjkdhf kas dhfkjah shdkj halsdj hflakjsdhd dd  dd aklsdh  kjasdh
-        asdfas asjkdhf kas dhfkjah shdkj halsdj hflakjsdhd dd  dd aklsdh  kjasdh
-        hsdkhflajsdhf a s sjs" data-ttip-position="left">lleft</span>
-        adipisicing elit. 
-        <span data-tooltip="Modo typi, qui nunc nobis videntur parum clari, fiant sollemnes" data-ttip-position="bottom">Voluptatem</span>
-        .</p>
-        <p><span data-tooltip="Modo typi, qui nunc nobis videntur parum clari, fiant sollemnes">Lorem</span>
-        ipsum dolor sit amet, consectetuer adipiscing elit,
-        sed diam nonummy nibh euismod tincidunt ut laoreet dolore
-        magna aliquam erat volutpat. Ut wisi enim ad minim veniam,
-        <span data-tooltip="Tooltip here one two three four five six seven" data-ttip-position="top">HOVER</span> 
-        quis nostrud exerci tation ullamcorper suscipit lobortis nisl
-        ut aliquip ex ea commodo consequat. Duis autem vel eum iriure
-        dolor in hendrerit in vulputate velit esse molestie consequat,
-        vel illum dolore eu feugiat nulla facilisis at vero eros et
-        <span data-tooltip="Tooltip" data-ttip-position="top">HOVER</span> 
-        accumsan et iusto odio dignissim qui blandit praesent luptatum
-        zzril delenit augue duis dolore te feugait nulla facilisi.
-        Nam liber tempor cum soluta nobis eleifend option congue
-        <span data-tooltip="Tooltip">HOVER AUTO</span> 
-        assum. Typi non habent claritatem insitam; est usus legentis
-        in iis qui facit eorum claritatem. Investigationes
-        demonstraverunt lectores legere me lius quod ii legunt saepius.
-        <span data-tooltip="Claritas est etiam processus dynamicus, qui sequitur mutationem
-        consuetudium lectorum. Mirum est notare quam littera gothica" 
-        data-ttip-position="bottom">LOOONG TOOLTIP</span> 
-        consuetudium lectorum. Mirum est notare quam littera gothica,
-        quam nunc putamus parum claram, anteposuerit litterarum formas
-        humanitatis per seacula quarta decima et quinta decima. Eodem
-        modo typi, qui nunc nobis videntur parum clari, fiant sollemnes
-        in futurum. Cconsuetudium <span data-tooltip="test" data-ttip-position="right">lectorum</span>. 
-        quam nunc putamus parum claram, anteposuerit litterarum formas
-        humanitatis per seacula quarta decima et quinta decima. Eodem
-        <span data-tooltip="test" data-ttip-position="left">lectorum</span>
-        modo typi, qui nunc nobis videntur parum clari, fiant sollemnes
-        in futurum.</p>
+        <h1><b>ttip</b>.js</h1>
+
+        <h2>Tooltips and popovers</h2>
+        
+        <div class="example-canvas">
+            <span class="span-ex toggle" data-popover="pop-ex" data-ttip-position="top">Click me</span>
+        </div>
+        
+        <div data-popover-content="pop-ex">
+            <h3>This is popover element</h3>
+        </div>
+
+        <h3><a name="usage">Usage</a></h3>
+
+        Include style and js file:
+
+        <pre><code>
+...
+&lt;script type="text/javascript" src="../tooltip.js"&gt;&lt;/script&gt;
+&lt;link rel="stylesheet" href="../tooltip.css" type="text/css"&gt;
+...
+        </code></pre>
+
+        <p>Note: javascript file should be included after jQuery</p>
+        
+        <h4><a name='tooltips'>Tooltips</a></h4>
+        
+        <p>Tooltips are activated when mouse pointer is placed over target element.</p>
+
         <p>
-            Consuetudium asdfa. Mirum est notare quam littera gothica,
-            <span data-popover="pop1">POPOVER</span>
-            quam nunc putamus parum claram, anteposuerit litterarum formas
-            humanitatis per seacula quarta decima et quinta decima.
+            Add <code>data-tooltip</code> attribute to element on which tooltip should be shown.
+            Tooltip will appear when pointer is over element. Hover
+            <span data-tooltip="Oh, look! This is a tooltip!" data-ttip-position="top">HERE</span>
+            to see example.
         </p>
+
+        <pre><code>
+&lt;span data-tooltip="Oh, look! This is a tooltip!"
+      data-ttip-position="top"&gt;
+      ...
+&lt;/span&gt;
+        </code></pre>
+
+        <p>
+            <code>data-ttip-position</code> attribute can be omitted, then tooltip will be placed
+            automatically based on position of tooltipped element on the page. Also position can de defined
+            explicitly. Possible values: <code>top</code>, <code>bottom</code>, <code>right</code>,
+            <code>left</code>.
+        </p>
+
+        <p>
+            Tooltip position will be calculated dynamically, so it will fit into viewport event on the sides
+            of the page
+        </p>
+        
+        <h4><a name='popovers'></a>Popovers</a></h4>
+        
+        <p>
+            Popovers can be shown/hidden by clicking on target element or by placing mouse pointer over target element. 
+            Inside popover you can place content of template element. Template element name could be passed with 
+            <code>data-popover</code> attribute.
+        </p>
+        
+        <div data-popover-content="pop1">
+            <div>Hello, this is <b>new</b> popover</div>
+            <button>OK</button>
+        </div>
+        
+        <p>Hover <span data-popover="pop1" data-ttip-position="top">HERE</span> to see and example.</p>
+        
+        <p>Example code:</p>
+        
+        <pre><code>
+&lt;!-- Popover template --&gt;
+&lt;div data-popover-content="pop1"&gt;
+    &lt;div&gt;Hello, this is &lt;b&gt;new&lt;/b&gt; popover&lt;/div&gt;
+    &lt;button&gt;OK&lt;/button&gt;
+&lt;/div&gt;
+...
+&lt;!-- Target element --&gt;
+&lt;span data-popover="pop1" data-ttip-position="top"&gt;...&lt;/span&gt;
+        </code></pre>
+        
+        <p>To show/hide popover by clicking on element add class <code>toggle</code> to target element.</p>
+        
+        <p>Click <span data-popover="pop1" class="toggle">HERE</span> to see an example.</p>
+        
+        <p>Example code:</p>
+        
+        <pre><code>
+&lt;!-- Target element --&gt;
+&lt;span data-popover="pop1" class="toggle"&gt;...&lt;/span&gt;
+        </code></pre>
+        
+        <div style='height: 50px'></div>
+
     </div>
-    
-    <div class="stretch"></div>
-    
-    <div class="footer">
-        <span data-popover="pop1" class='toggle'>POPOVER</span>
-        footer
-        <span data-tooltip="Modo typi, qui nunc nobis videntur parum clari, fiant sollemnes
-        Modo typi, qui nunc nobis videntur parum clari, fiant sollemnes
-        Modo typi, qui nunc nobis videntur parum clari, fiant sollemnes
-        sdf" data-ttip-position="right">Rrright</span>
-    </div>
-    
-    <div data-popover-content="pop1">
-        <div>Hello, this is <b>new</b> popover</div>
-        <button>OK</button>
-    </div>
-    
+
 </body>
 </html>
