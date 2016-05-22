@@ -47,6 +47,7 @@
         var body = document.getElementsByTagName('body')[0]
             , W = body.offsetWidth
             , H = body.offsetHeight
+            , bb = element.getBoundingClientRect()
             ;
 
         /**
@@ -59,33 +60,33 @@
          */
         var D = {
             get top() {
-                return element.offsetTop;
+                return bb.top;
             },
             get left() {
-                return element.offsetLeft;
+                return bb.left;
             },
             get right() {
                 return W
                     - this.left
-                    - element.offsetWidth
+                    - bb.width
                     ;
             },
             get bottom() {
                 return H
                     - this.top
-                    - element.offsetHeight
+                    - bb.height
                     ;
             },
             center: {
                 get x() {
-                    return D.left + element.offsetWidth / 2;
+                    return D.left + bb.width / 2;
                 },
                 get y() {
-                    return D.top + element.offsetHeight / 2;
+                    return D.top + bb.height / 2;
                 }
             },
-            h: element.offsetHeight,
-            w: element.offsetWidth
+            h: bb.height,
+            w: bb.width
         };
         return D;
     }
@@ -246,7 +247,7 @@
             var c = this.container instanceof $ ? this.container.get(0) : this.container;
             var fitsLeft = (this.bbox.w / 2 + this.bbox.left + minpad * 2) > c.offsetWidth / 2;
             var fitsRight = (this.bbox.w / 2 + this.bbox.right + minpad * 2) > c.offsetWidth / 2;
-            if (!fitsLeft || !fitsRight) {
+            if (!(fitsLeft && fitsRight) && (fitsLeft || fitsRight)) {
                 if (!fitsLeft) {
                     shiftx = minpad - this.bbox.left;
                     pinshift = this.bbox.center.x - minpad;
@@ -261,14 +262,18 @@
             var fitsTop = (this.bbox.h / 2 + this.bbox.top + minpad * 2) > c.offsetHeight / 2;
             var fitsBottom = (this.bbox.h / 2 + this.bbox.bottom + minpad * 2) > c.offsetHeight / 2;
             // Verticall correction
-            if (!fitsBottom) {
-                shifty = this.bbox.bottom - minpad + this.bbox.h - c.offsetHeight;
-                pinshift = this.bbox.h / 2 + this.bbox.bottom - minpad - 10;
-                this.pin.css('bottom', pinshift).css('top', 'initial');
-            } else if (!fitsTop) {
-                shifty = minpad - this.bbox.top;
-                pinshift = this.bbox.center.y - minpad;
-                this.pin.css('top', pinshift);
+            if (!(fitsTop && fitsBottom) && (fitsTop || fitsBottom)){
+                if (!fitsBottom) {
+                    minpad = Math.min(minpad, this.bbox.bottom);
+                    shifty = this.bbox.bottom - minpad + this.bbox.h - c.offsetHeight;
+                    pinshift = this.bbox.h / 2 + this.bbox.bottom - minpad - 10;
+                    this.pin.css('bottom', pinshift).css('top', 'initial');
+                } else if (!fitsTop) {
+                    minpad = Math.min(minpad, this.bbox.top);
+                    shifty = minpad - this.bbox.top;
+                    pinshift = this.bbox.center.y - minpad;
+                    this.pin.css('top', pinshift);
+                }
             }
         }
 
@@ -358,7 +363,7 @@
                 , $target = $(target)
                 ;
             if (!$target.has('.ttip-container').length && $target.is('[data-popover]')) {
-                tt = new Popover($target);
+                new Popover($target);
             }
         });
 
